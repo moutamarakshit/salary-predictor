@@ -32,7 +32,7 @@ data/        put the raw dataset here (gitignored, see data/README.md)
 ## Running it locally
 
 ```bash
-git clone <your-repo-url>
+git clone <(https://github.com/moutamarakshit/salary-predictor.git)>
 cd salary-predictor
 python -m venv .venv && source .venv/bin/activate   # optional but recommended
 pip install -r requirements.txt
