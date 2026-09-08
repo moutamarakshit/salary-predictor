@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Base Pay — STEM Salary Estimate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="wordmark">
+    <span class="wordmark__ledger">01</span> Base&nbsp;Pay
+  </div>
+
+  <main class="sheet">
+
+    <section class="ledger" aria-label="Your details">
+      <header class="ledger__head">
+        <h1>Estimate a STEM base salary</h1>
+        <p>Fill in the role. The model compares it against ~50,000 real STEM compensation reports to estimate base pay — not bonus, not stock.</p>
+      </header>
+
+      <form id="predict-form" class="ledger__form">
+
+        <div class="row">
+          <label for="title">Job title</label>
+          <input list="title-options" id="title" name="title" placeholder="e.g. Software Engineer" required autocomplete="off" />
+          <datalist id="title-options"></datalist>
+        </div>
+
+        <div class="row">
+          <label for="company">Company</label>
+          <input list="company-options" id="company" name="company" placeholder="e.g. Amazon" required autocomplete="off" />
+          <datalist id="company-options"></datalist>
+        </div>
+
+        <div class="row row--split">
+          <div class="row__field">
+            <label for="yearsofexperience">Years of experience</label>
+            <input type="number" id="yearsofexperience" name="yearsofexperience" min="0" max="50" step="0.5" value="5" required />
+          </div>
+          <div class="row__field">
+            <label for="yearsatcompany">Years at this company</label>
+            <input type="number" id="yearsatcompany" name="yearsatcompany" min="0" max="50" step="0.5" value="2" required />
+          </div>
+        </div>
+
+        <div class="row row--split">
+          <div class="row__field">
+            <label for="nation">Country</label>
+            <select id="nation" name="nation" required></select>
+          </div>
+          <div class="row__field">
+            <label for="education">Education</label>
+            <select id="education" name="education" required></select>
+          </div>
+        </div>
+
+        <div class="row row--split">
+          <div class="row__field">
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender" required></select>
+          </div>
+          <div class="row__field">
+            <label for="race">Race / ethnicity</label>
+            <select id="race" name="race" required></select>
+          </div>
+        </div>
+
+        <p class="ledger__note">Gender and race are included because the underlying survey collects them and the model was trained on the full feature set. They are not a recommendation to use these factors in real pay decisions — see the README for the full discussion of this tradeoff.</p>
+
+        <button type="submit" id="submit-btn">Estimate base salary</button>
+        <p id="form-error" class="form-error" hidden></p>
+      </form>
+    </section>
+
+    <aside class="result" aria-label="Estimate">
+      <div class="result__inner" id="result-empty">
+        <span class="result__ledger">02</span>
+        <p class="result__placeholder">Your estimate will stamp in here once you submit the form.</p>
+      </div>
+
+      <div class="result__inner" id="result-filled" hidden>
+        <span class="result__ledger">02</span>
+        <p class="result__label">Estimated base salary</p>
+        <p class="result__number" id="result-number">$0</p>
+        <p class="result__range" id="result-range"></p>
+
+        <dl class="result__facts" id="result-facts">
+          <div><dt>Model</dt><dd>XGBoost regression</dd></div>
+          <div><dt>Test R²</dt><dd id="fact-r2">—</dd></div>
+          <div><dt>Typical error (MAE)</dt><dd id="fact-mae">—</dd></div>
+        </dl>
+      </div>
+
+      <div class="result__inner" id="result-loading" hidden>
+        <span class="result__ledger">02</span>
+        <p class="result__placeholder">Calculating…</p>
+      </div>
+    </aside>
+
+  </main>
+
+  <footer class="foot">
+    Trained on the Data Science &amp; STEM Salaries dataset (levels.fyi survey, 2017–2021). Estimates are directional, not a guarantee of what any employer will offer.
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
